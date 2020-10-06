@@ -7,14 +7,14 @@ Wenzhao Wu
 library(tidyverse)
 ```
 
-    ## -- Attaching packages ---------------------- tidyverse 1.3.0 --
+    ## -- Attaching packages ----------- tidyverse 1.3.0 --
 
     ## v ggplot2 3.3.2     v purrr   0.3.4
     ## v tibble  3.0.3     v dplyr   1.0.2
     ## v tidyr   1.1.2     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.5.0
 
-    ## -- Conflicts ------------------------- tidyverse_conflicts() --
+    ## -- Conflicts -------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -170,15 +170,38 @@ ggplot(weather_df, aes(x = date, y = tmax, color = name)) +
 <img src="visualization_files/figure-gfm/unnamed-chunk-8-1.png" width="90%" />
 
 ``` r
-ggplot(weather_df,aes(x = tmax, y = tmin, color = "CentralPark_NY")) + geom_point() +
-geom_smooth(se = FALSE, color = "blue")
+weather_df %>%
+  mutate(
+    tmin = 9 * tmin / 5 + 32,
+    tmax = 9 * tmax / 5 + 32
+  )
 ```
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## # A tibble: 1,095 x 6
+    ##    name           id          date        prcp  tmax  tmin
+    ##    <chr>          <chr>       <date>     <dbl> <dbl> <dbl>
+    ##  1 CentralPark_NY USW00094728 2017-01-01     0  48.0  39.9
+    ##  2 CentralPark_NY USW00094728 2017-01-02    53  41    37.0
+    ##  3 CentralPark_NY USW00094728 2017-01-03   147  43.0  39.0
+    ##  4 CentralPark_NY USW00094728 2017-01-04     0  52.0  34.0
+    ##  5 CentralPark_NY USW00094728 2017-01-05     0  34.0  27.1
+    ##  6 CentralPark_NY USW00094728 2017-01-06    13  33.1  25.2
+    ##  7 CentralPark_NY USW00094728 2017-01-07    81  26.2  20.1
+    ##  8 CentralPark_NY USW00094728 2017-01-08     0  25.2  16.2
+    ##  9 CentralPark_NY USW00094728 2017-01-09     0  23.2  14.2
+    ## 10 CentralPark_NY USW00094728 2017-01-10     0  46.0  21.2
+    ## # ... with 1,085 more rows
 
-    ## Warning: Removed 15 rows containing non-finite values (stat_smooth).
+``` r
+centralpark = 
+  subset(weather_df, name %in% ("CentralPark_NY"))
 
-    ## Warning: Removed 15 rows containing missing values (geom_point).
+ggplot(centralpark,aes(x = tmax, y = tmin, color = name)) + 
+  geom_point() +
+  geom_smooth(se = FALSE, color = "blue")
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 
 <img src="visualization_files/figure-gfm/unnamed-chunk-9-1.png" width="90%" />
 
@@ -186,10 +209,10 @@ geom_smooth(se = FALSE, color = "blue")
 
 ``` r
 ggplot(weather_df, aes(x = tmax, y = tmin)) + 
-  geom_bin2d()
+  geom_hex()
 ```
 
-    ## Warning: Removed 15 rows containing non-finite values (stat_bin2d).
+    ## Warning: Removed 15 rows containing non-finite values (stat_binhex).
 
 <img src="visualization_files/figure-gfm/unnamed-chunk-10-1.png" width="90%" />
 
@@ -242,7 +265,8 @@ ggplot(weather_df, aes(x = tmax, fill = name)) +
 <img src="visualization_files/figure-gfm/unnamed-chunk-14-1.png" width="90%" />
 
 ``` r
-ggplot(weather_df, aes(x = name, y = tmax)) + geom_boxplot()
+ggplot(weather_df, aes(x = name, y = tmax)) + 
+  geom_boxplot()
 ```
 
     ## Warning: Removed 3 rows containing non-finite values (stat_boxplot).
@@ -338,3 +362,11 @@ ggsave("weather_plot.pdf", weather_plot, width = 8, height = 5)
 ```
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
+
+``` r
+weather_plot
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="visualization_files/figure-gfm/unnamed-chunk-20-1.png" width="90%" />
