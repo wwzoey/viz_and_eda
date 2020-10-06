@@ -145,7 +145,7 @@ ggplot(weather_df, aes(x = date, y = tmax, color = name)) +
   geom_smooth(se = FALSE) + 
   labs(title = "Max.Precipitation over time", x = "Time", y = "Max.Precipitation") +
   viridis::scale_color_viridis(name = "Location", discrete = TRUE) +
-  theme_classic() + 
+  theme_minimal() + 
   theme(legend.position = "bottom")
 ```
 
