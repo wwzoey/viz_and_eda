@@ -7,14 +7,14 @@ Wenzhao Wu
 library(tidyverse)
 ```
 
-    ## -- Attaching packages ----------- tidyverse 1.3.0 --
+    ## -- Attaching packages --------------------- tidyverse 1.3.0 --
 
     ## v ggplot2 3.3.2     v purrr   0.3.4
     ## v tibble  3.0.3     v dplyr   1.0.2
     ## v tidyr   1.1.2     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.5.0
 
-    ## -- Conflicts -------------- tidyverse_conflicts() --
+    ## -- Conflicts ------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -302,7 +302,9 @@ ggplot(weather_df, aes(x = tmax, y = name)) +
 
 ``` r
 ggplot(weather_df, aes(x = prcp, fill = name)) + 
-  geom_histogram(position = "dodge", binwidth = 5, breaks = seq(0,945,50))
+  geom_histogram(position = "dodge", binwidth = 5, breaks = seq(0,945,50)) +
+  scale_y_continuous(
+    trans = "sqrt")
 ```
 
     ## Warning: Removed 3 rows containing non-finite values (stat_bin).
@@ -311,7 +313,9 @@ ggplot(weather_df, aes(x = prcp, fill = name)) +
 
 ``` r
 ggplot(weather_df, aes(x = prcp, fill = name)) + 
-  geom_density(alpha = .4, adjust = 0.4, color = "blue") 
+  geom_density(alpha = .4, adjust = 0.4, color = "yellow") +
+  scale_y_continuous(
+    trans = "sqrt")
 ```
 
     ## Warning: Removed 3 rows containing non-finite values (stat_density).
@@ -320,7 +324,9 @@ ggplot(weather_df, aes(x = prcp, fill = name)) +
 
 ``` r
 ggplot(weather_df, aes(x = name, y = prcp)) + 
-  geom_boxplot(outlier.shape = 5, outlier.size = 1)
+  geom_boxplot(outlier.shape = 5, outlier.size = 1) +
+  scale_y_continuous(
+    trans = "sqrt")
 ```
 
     ## Warning: Removed 3 rows containing non-finite values (stat_boxplot).
@@ -330,7 +336,9 @@ ggplot(weather_df, aes(x = name, y = prcp)) +
 ``` r
 ggplot(weather_df, aes(x = name, y = prcp)) + 
   geom_violin(aes(fill = name), alpha = .5) + 
-  stat_summary(fun = "median", color = "blue")
+  stat_summary(fun = "median", color = "blue") +
+  scale_y_continuous(
+    trans = "sqrt")
 ```
 
     ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).

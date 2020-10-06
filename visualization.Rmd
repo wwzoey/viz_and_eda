@@ -143,17 +143,25 @@ ggplot(weather_df, aes(x = tmax, y = name)) +
 
 ```{r}
 ggplot(weather_df, aes(x = prcp, fill = name)) + 
-  geom_histogram(position = "dodge", binwidth = 5, breaks = seq(0,945,50))
+  geom_histogram(position = "dodge", binwidth = 5, breaks = seq(0,945,50)) +
+  scale_y_continuous(
+    trans = "sqrt")
 
 ggplot(weather_df, aes(x = prcp, fill = name)) + 
-  geom_density(alpha = .4, adjust = 0.4, color = "blue") 
+  geom_density(alpha = .4, adjust = 0.4, color = "yellow") +
+  scale_y_continuous(
+    trans = "sqrt")
 
 ggplot(weather_df, aes(x = name, y = prcp)) + 
-  geom_boxplot(outlier.shape = 5, outlier.size = 1)
+  geom_boxplot(outlier.shape = 5, outlier.size = 1) +
+  scale_y_continuous(
+    trans = "sqrt")
 
 ggplot(weather_df, aes(x = name, y = prcp)) + 
   geom_violin(aes(fill = name), alpha = .5) + 
-  stat_summary(fun = "median", color = "blue")
+  stat_summary(fun = "median", color = "blue") +
+  scale_y_continuous(
+    trans = "sqrt")
 
 ggplot(weather_df, aes(x = prcp, y = name)) + 
   geom_density_ridges(scale = .85)
